@@ -1,0 +1,353 @@
+System parcheggio
+
+Dispatch uscita : uscita(token)
+Dispatch start : start(V)
+Dispatch park : park(V)
+Dispatch ingresso : ingresso(V)
+Dispatch outdoor : outdoor(V)
+Dispatch goto : goto(V)
+Dispatch informin : informin(V)
+Dispatch findslot : findslot(V)
+Dispatch movetoout : movetoout(V)
+Dispatch movetoslotout : movetoslotout(V)
+
+Request acceptout : acceptout(V)
+Reply response : response(V)
+
+//Request acceptin : acceptin(V)
+Dispatch slotsnum : slotsnum(SN)
+
+Request carenter : carenter(V)
+Reply receipt : receipt(TOKENID)
+
+
+Event uscita : uscita(token)
+Event acceptin : acceptin(peso)
+Event arrivoauto : arrivoauto(X)
+Event autospostata : autospostata(V)
+Event uscitalibera : uscitalibera(V)
+Event autopronta : autopronta(V)
+Event timeout : timeout(V)
+
+Context ctxParcheggio ip [host="localhost" port=8082]
+
+CodedQActor outsonar context ctxParcheggio className "outSonar"
+
+QActor weightsensor context ctxParcheggio { 
+	State s0 initial{
+		
+		delay 500
+		println("Arrivo auto")
+		[# var p =kotlin.random.Random.nextLong(500,4000) #]
+		if [#p>700#]{
+			println("Emetto segnale peso")
+			emit acceptin : acceptin
+			//request parkmanagerservice -m acceptin : acceptin
+		} else {
+			println("peso ridotto")
+		}
+		delay 15000
+	} Goto s0
+}
+
+QActor parkmanagerservice context ctxParcheggio {
+	[# var POSTILIBERI = 6
+		var robotLibero = true
+		var outdoorLibera = true
+		var indoorLibera = true	
+		var PROGRESSIVO = 0	
+		lateinit var outSonarActor : ActorBasic
+	 #]
+	
+	State moveToHome initial{
+		[#outSonarActor     = sysUtil.getActor("outsonar")!!#]
+		forward parkmanagerservice -m goto : goto(home)
+	}
+	Transition t0 whenEvent acceptin -> acceptin
+					whenMsg goto-> goto
+					whenRequest acceptout -> acceptout
+					whenEvent uscitalibera -> uscitalibera
+					 whenEvent timeout -> timeout
+	
+	State acceptin {
+		if [# indoorLibera #] {
+			println("Vado in informin")
+			forward parkmanagerservice -m informin : informin
+		} else{
+			emit acceptin:acceptin
+		}
+	}
+	Transition t0 whenMsg informin -> informin
+				whenEvent acceptin->acceptin
+				whenEvent uscitalibera -> uscitalibera
+				 whenEvent timeout -> timeout
+	
+	State informin {
+		forward cliente -m slotsnum : slotsnum($POSTILIBERI)
+	}
+	Transition t0 whenRequest carenter -> movetoin
+				  whenEvent uscitalibera -> uscitalibera
+				   whenEvent timeout -> timeout
+	
+	State movetoin{
+		[# robotLibero=false 
+			indoorLibera=false	
+		#]
+		println("Robot move to in")
+		delay 1000
+	}Goto receipt
+	
+	State receipt{
+		replyTo carenter with receipt : receipt($PROGRESSIVO)
+		forward parkmanagerservice -m goto : goto($PROGRESSIVO)
+		[# PROGRESSIVO++ #]
+		updateResource [# "$PROGRESSIVO" #]
+	}
+	Transition t0 whenMsg goto-> goto
+				  whenEvent uscitalibera -> uscitalibera
+	State goto {
+		[# robotLibero=false #]
+		onMsg(goto : goto(ST)){
+			[# var ST = payloadArg(0) 
+				println(ST)
+				#
+			]
+			if [# ST.equals("home") #]{
+				println("Ric. gotohome")
+				delay 1000
+				println("ROBOT at HOME")
+				[# robotLibero=true #]
+			} 
+			else{
+				[# var POS = payloadArg(0) #]
+				println("ROBOT $ST move to $POS")
+				[# indoorLibera=true #]
+				println("goto home")
+				forward parkmanagerservice -m goto : goto(home)
+			}
+		}
+	} Transition t0 whenMsg goto -> goto
+					whenEvent acceptin -> acceptin
+					whenRequest acceptout -> acceptout
+					whenMsg movetoout -> movetoout
+					whenEvent uscitalibera -> uscitalibera
+					whenEvent timeout -> timeout
+	
+	State movetoslotout{
+		[# robotLibero=false #]
+		onMsg(movetoslotout : movetoslotout(POS)){
+			[# var POS = payloadArg(0) #]
+			println("ROBOT move to $POS")
+			delay 2000
+			//forward parkmanagerservice -m movetoout : movetoout
+		}
+	}Goto movetoout
+					
+	State movetoout{
+		println("movetoout")
+		[# outdoorLibera = false #]
+		delay 2000
+		forward parkmanagerservice -m goto : goto(home)
+		emit arrivoauto : arrivoauto
+		//emit autopronta : autopronta
+	} 
+	Transition t0 whenMsg goto -> goto
+				  whenEvent timeout -> timeout
+	
+	
+	State acceptout{
+		println("acceptout")
+		if[# outdoorLibera #]{
+			onMsg(acceptout : acceptout(TOKENID)){
+				[#  var T = payloadArg(0) #]
+				forward parkmanagerservice -m findslot : findslot($T)
+				println("Slot $T")
+			}
+			replyTo acceptout with response : response(true)
+		
+		} else {
+			replyTo acceptout with response : response(false)
+		}
+	}
+	Transition t0 whenMsg findslot  -> findslot
+	
+	State findslot{
+		
+		onMsg(findslot : findslot(TOKEN)){
+				[# var TOKEN = payloadArg(0) #]
+				println("findslot")
+				forward parkmanagerservice -m movetoslotout : movetoslotout($TOKEN)
+				
+			}
+	}
+	Transition t0 whenMsg movetoslotout -> movetoslotout
+	
+	State uscitalibera{
+		[# outdoorLibera = true #]
+		updateResource [# "$outdoorLibera" #]
+	}
+	Transition t0 whenEvent acceptin -> acceptin
+				  whenMsg goto-> goto
+				  whenMsg informin -> informin
+				  whenEvent acceptin->acceptin
+				  whenRequest carenter -> movetoin
+				  
+	State timeout{
+		//[# outdoorLibera=true #]
+		//updateResource [# "$outdoorLibera" #]
+		println("ALARM")
+	}
+	Transition t0 whenEvent acceptin -> acceptin
+					  whenMsg goto-> goto
+					  whenMsg informin -> informin
+					  whenEvent acceptin->acceptin
+					  whenRequest carenter -> movetoin				  
+}
+
+/*
+QActor door context ctxParcheggio{
+	[#
+		var robotLibero = true
+		var outdoorLibera = true
+		var postiLiberi = 6
+	#]
+	
+	State s0 initial{
+		println("Stato 0 initial")
+	}
+	Transition t0 whenMsg uscita -> uscita
+				whenMsg ingresso -> ingresso
+	
+	
+	State uscita{
+		println("Uscita")
+		if[# robotLibero==true #]{
+			onMsg(uscita : uscita(token)){
+				[# var token = payloadArg(0) #]
+			}
+			[# robotLibero = false #]
+			updateResource[#"$robotLibero"#]
+			println("Robot occupato, carica auto e la sposta in uscita.")
+			delay 500
+			forward door -m outdoor : outdoor(1)
+		} else{
+			println("Uscita, ROCCUPATO")
+			forward door -m uscita : uscita(1)
+		}
+	}
+	Transition t0 whenMsg outdoor -> outdoor
+	
+	
+	State outdoor{
+		[#
+			robotLibero = true
+			outdoorLibera = false
+			postiLiberi = postiLiberi+1
+		#]
+		updateResource[#"$postiLiberi"#]
+		updateResource[#"$robotLibero"#]
+		updateResource[#"$outdoorLibera"#]
+		println("Robot libero, uscita occupata")
+		delay 500
+	}
+	Goto liberaUscita
+	
+	State liberaUscita{
+		[#
+			var outdoorLibera = true
+		#]
+		println("Robot libero, uscita libera.")
+		delay 1000
+	}
+	Transition t0 whenMsg uscita -> uscita
+				whenMsg ingresso -> ingresso
+	State ingresso {
+		println("Ingresso")
+		[#
+			postiLiberi = postiLiberi-1
+		#]
+		updateResource[#"$postiLiberi"#]
+		if[# robotLibero==true #]{
+			println("Ingresso, RL")
+			[#
+				robotLibero=false
+			#]
+			updateResource[#"$robotLibero"#]
+			delay 500
+			forward door -m park : park(1)
+		} else{
+			println("Ingresso, ROCCUPATO")
+			forward door -m ingresso : ingresso(1)
+		}
+	}
+	Transition t0 whenMsg ingresso -> ingresso
+				whenMsg park -> park
+	
+	State park{
+		[#
+			robotLibero=true
+		#]
+		updateResource[#"$robotLibero"#]
+		println("PARCHEGGIATO!")
+		delay 1000
+	} 
+	Transition t0 whenMsg uscita -> uscita
+				whenMsg ingresso -> ingresso
+}
+
+*/
+
+QActor cliente context ctxParcheggio{
+	[# var TOKENID=-1 #]
+	State s0 initial {
+	}
+	Transition t0 whenMsg slotsnum -> s1
+	
+	State s1 {
+		onMsg( slotsnum : slotsnum(S)){
+			[# var S = payloadArg(0).toInt() #]
+			if [# S>0 #]{
+				request parkmanagerservice -m carenter : carenter
+			} 
+		}
+	}
+	Transition t0 whenReply receipt -> s2
+	
+	State s2{
+		onMsg(receipt : receipt(TOKENID)){
+			[# TOKENID = payloadArg(0).toInt() #]
+			println("Client: TOKEN ricevuto $TOKENID")
+		}
+		delay 5000
+		request parkmanagerservice -m acceptout : acceptout($TOKENID)
+	}	
+	Transition t0 whenReply response -> s3
+	
+	State s3 {
+		onMsg(response : response(R)){
+			[# var R = payloadArg(0).toBoolean() #]
+			println("Response: $R")
+			if[# !R #]{
+				println("Torno tra poco")
+				request parkmanagerservice -m acceptout : acceptout($TOKENID)
+			} 
+		}
+	}Transition t0 whenReply response -> s3
+	  				whenEvent arrivoauto -> s4
+	State s4{
+		delay 20000
+		emit autospostata : autospostata
+		println("Invio evento autospostata")
+	}
+	
+	/*State s0 initial {
+		forward door -m ingresso : ingresso(1) 
+		forward door -m uscita : uscita(1) 
+		forward door -m ingresso : ingresso(1)
+	}*/
+}
+
+
+
+
+
