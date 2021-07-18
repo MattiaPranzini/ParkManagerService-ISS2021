@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="600.0" type="Pane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUIController">
+   <children>
+      <Button id="startstop" layoutX="263.0" layoutY="238.0" mnemonicParsing="false" onAction="#startstop" text="Stop robot" />
+      <Label id="temperatural" fx:id="temperatural" layoutX="381.0" layoutY="39.0" text="Temperatura:" />
+      <TextField id="temperatura" fx:id="temperatura" editable="false" layoutX="467.0" layoutY="35.0" prefHeight="17.0" prefWidth="39.0" />
+      <CheckBox id="ventilatore" disable="true" layoutX="479.0" layoutY="74.0" mnemonicParsing="false" onAction="#ventilatore" />
+      <Label layoutX="381.0" layoutY="74.0" text="Ventilatore" />
+      <Circle id="temperaturealarm" fx:id="temperaturealarm" fill="#1fff2c" layoutX="538.0" layoutY="48.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label layoutX="376.0" layoutY="115.0" text="Outdoor Alarm" />
+      <Circle id="outdooralarm" fx:id="outdooralarm" fill="#1fff2c" layoutX="487.0" layoutY="124.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+      <Rectangle id="slot1" fx:id="slot1" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="58.0" layoutY="41.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle id="slot4" fx:id="slot4" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="138.0" layoutY="41.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle id="slot2" fx:id="slot2" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="58.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle id="slot5" fx:id="slot5" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="138.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle id="slot3" fx:id="slot3" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="58.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle id="slot6" fx:id="slot6" arcHeight="5.0" arcWidth="5.0" fill="#1fff2c" height="46.0" layoutX="138.0" layoutY="131.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Label layoutX="380.0" layoutY="154.0" text="Stato trolley" />
+      <TextField id="statotrolley" fx:id="statotrolley" editable="false" layoutX="468.0" layoutY="150.0" prefHeight="17.0" prefWidth="39.0" />
+   </children>
+</fx:root>
