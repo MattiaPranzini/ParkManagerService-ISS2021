@@ -1,3 +1,7 @@
+/* Modello eseguibile utile ai fini di test delle fasi:
+ * * Parcheggio
+ * * Ritiro auto
+ */
 System parcheggio
 
 Dispatch uscita : uscita(token)

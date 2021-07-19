@@ -94,26 +94,27 @@ QActor thermometer context ctxbasicrobot{
 		delay 2000
 	}Goto s0
 }
-
+*/
 QActor fan context ctxbasicrobot{
 	[# var ventilatoreacceso = false #]
 	
 	State s0 initial{
 		[# ventilatoreacceso=false #]
-		updateResource [# "ventilatoreacceso" #]
+		updateResource [# "ventilatore($ventilatoreacceso)" #]
 		forward managerservice -m ventilatore : ventilatore(false)
 	}
 	Transition t0 whenEvent tempalarmon -> s1
 	
 	State s1{
 		[# ventilatoreacceso=true #]
-		updateResource [# "ventilatoreacceso" #]
+		updateResource [# "ventilatore($ventilatoreacceso)" #]
+		println("FAN ACCESO")
 		forward managerservice -m ventilatore : ventilatore(true)
 	}
 	Transition t0 whenEvent tempalarmoff -> s0
 }
 
-*/
+
 QActor managerservice context ctxbasicrobot{
 	[# var interfaccia :parcheggio.Interfaccia ?= null  #]
 	State s0 initial{
