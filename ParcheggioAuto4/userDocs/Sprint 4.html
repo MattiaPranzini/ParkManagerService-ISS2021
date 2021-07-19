@@ -1,0 +1,952 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <!--
+<link rel="stylesheet" type="text/css" href="../css/issStyle1.css">
+<script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+<style type="text/css">
+body
+{
+    margin-left:  30px;
+    margin-right: 30px;
+};
+
+P
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+};
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+	font-size: 93%;
+}
+
+a:hover {
+    background-color: #cccccc;
+}
+
+
+hr {
+    clear: both;
+    height: 1px;
+    color: #242424;
+    background-color: transparent;
+}
+
+h1, h2, h3 {
+    color: #242424;
+    clear: left;
+    font: 100% Tahoma, Helvetica, Arial, sans-serif;
+    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+top {
+	width: 100%;
+}
+
+
+#i {
+    color: #ff1010;
+}
+tt{
+	font-family: "Arial";
+    font-size: 90%;
+	color: #006600;
+}
+em{
+	font-family: "Arial";
+    font-size: 80%;
+	font-weight: bold;
+	border-style:solid;
+	border-color: #abe876;
+    color: #1632cc;
+}
+bc{
+	font-family: "Arial";
+	font-size: 90%;
+	font-weight: bold;
+    color: #990000;
+	background-color: #fcf8c7;
+}
+ks{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #0000CD	;
+	font-size: 90%;
+}
+kc{
+	font-family: "Arial";
+	font-weight: bold;
+    color: #008000	;
+	font-size: 90%;
+}
+pre{
+	font-family: "Consolas";
+	font-size: 85%;
+	background-color: #f5f5f5;
+	border: 1.5px solid silver;
+	padding: 5px;
+}
+m{
+	font-family: "Helvetica";
+	line-height: 100%;
+ 	font-size: 75%;
+}
+div.body{
+	 
+    font-size: 18px;
+}
+k{
+    color: #990000;
+	font-weight: bold;
+	font-size: 90%;
+}
+h1 {
+    font-size: 150%;
+    background-color: #b2c0ff;
+	padding: 10px;
+}
+
+h2 {
+    background-color: #9ed8ff;
+    font-size: 130%;
+}
+
+h3 {
+	background-color: #e6ccff;
+    font-size: 100%;
+}
+h4 {
+    background-color: #ccffcc;
+    font-size: 100%;
+	width: 95%;
+	border-radius: 5px;
+	padding: 2px;
+}
+h5 {
+    background-color: #d5ffb0;
+    font-size: 100%;
+
+}
+div.req{
+	background-color: #d9ffb3;
+    font-size: 18px;
+	width: 700px;
+    border: 3px solid green;
+    padding: 15px;
+    margin: 10px;
+}
+div.remark{
+	background-color: #E3F2FD;
+    border: 1.5px solid #d5f2ed;
+    padding: 15px;
+    margin: 10px;
+	border-radius: 25px;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ol, ul, li {
+  margin: 0;
+  margin-left: 10px;
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+img {
+	border: 1.5px solid #d5f2ed
+
+}
+
+a, a:visited, a:active, a:link, a:hover {
+    text-decoration: underline;
+    color: #545454;
+    background-color: transparent;
+}
+
+div.wrapdesc{
+	width: 90%;
+	margin: auto;
+}
+
+div.imagedesc{
+	width: 85%;
+	margin: auto;
+}
+</style>
+    
+<head>
+   
+<title>CorsaroLiaPranzini</title></head>
+    
+<body>
+<div id="top">
+<h1>LABORATORIO DI INGEGNERIA DEI SISTEMI SOFTWARE <font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+ <div class="remark">
+Our motto:<br>   <k>there is no code without a project, no project
+without problem analysis and no problem without requirements</k>.
+ </div>
+In this document the first steps of the development of the "ParkManagerService" project will be reported. Fundamental aspects of the software engineer work will also be analyzed.<br>
+This document represents the final task of the Software Systems Engineering M course.
+ 
+<h2>Requirements</h2>
+<h3>Automated Car-Parking</h3> 
+
+A company intends to build an <i>automating parking service</i> composed of a set of elements:
+
+<ul>
+<li>A software system, named <em>ParkManagerService</em>, that implements the required automation functions.</li>
+<li>A <tt>DDR</tt> robot working as a <em>transport trolley</em>, that is intially situated in its <em>home</em> location. 
+The <tt>transport trolley</tt> has the form of a square of side length <em>RD</em>.
+</li>
+<li>A <em>parking-area</em> is an empty room that includes;
+	<ul>
+	<li>an <em>INDOOR</em> to enter the car in the area. Facing the <tt>INDOOR</tt>, there is
+	a <em>INDOOR-area</em> equipped with a <em>weigthsensor</em> that measures the <em>weigth</em> of the car;</li>
+	<li>an <em>OUTDOOR</em> to exit from the <tt>parking-area</tt>. Just after the <tt>OUTDOOR</tt>, there is
+	<em>OUTDOOR-area</em> equipped with a <em>outsonar</em>, used to detect the presence of a car.
+	The <tt>OUTDOOR-area</tt>, once engaded by a car, should be freed within a prefixed interval of time <em>DTFREE</em>; </li>
+	<li>a number <tt>N (N=6)</tt> of <em>parking-slots</em>;</li>
+	<li>a <em>thermometer</em> that measures the temperature <em>TA</em> of the area;</li>
+	<li>a <em>fan</em> that should be activated when <k>TA > TMAX</k>, where <em>TMAX</em> is a prefixed value (e.g. <tt>35</tt>)</li>
+	</ul>
+	A <em>map</em> of the parking area, represented as a grid of squares of side length <em>RD</em>, 
+	is available in the file <a href="parkingMap.txt" target="code">parkingMap.txt</a>:
+	<pre>
+|r, 0, 0, 0, 0, 0, 0, X, 
+|0, 0, <bc>X, X,</bc>  0, 0, 0, X, 
+|0, 0, <bc>X, X,</bc>  0, 0, 0, X, 
+|0, 0, <bc>X, X,</bc>  0, 0, 0, X, 
+|0, 0, 0, 0, 0, 0, 0, X, 
+|X, X, X, X, X, X, X, X, </pre>
+	The map includes the positions of the  <tt>parking-slots</tt> (marked above with the symbol <k>X</k>) 
+	and of the <em>fixed obstacles</em> in the area (the walls marked with the symbol <b>X</b>).
+	<br/><br/>
+	The area marked with <k>X</k> is a sort of 'equipped area' upon which the <tt>transport trolley</tt> cannot walk.
+	Thus, to get the car in the <tt>parking-slot</tt> <ks>(2,2)</ks>, the <tt>transport trolley</tt> must
+	go in cell <ks>(1,2)</ks>.
+	<br/><br/>
+
+	The proper scene for the WEnv is reported in: <a href="parkingAreaConfig.js" target="code">parkingAreaConfig.js</a>
+ 
+	
+	<center><img src="./img/parkingAreaZone.PNG" alt="parkingAreaZone.PNG" width="45%" height="32%"/></center>
+</li>	
+<li>a <em>parking-manager</em> (an human being) which supervises the state of the <tt>parking-area</tt>
+and handles critical situations<!-- by using a software system named <em>ParkMonitoringService</em> -->. </li>
+</ul>
+
+<div class="remark">
+The job of our company is to design, build and deploy the  <em>ParkManagerService</em>.
+</div>
+<!-- and the <em>ParkMonitoringService</em>.-->
+<h3>User stories</h3>
+As a <bc>client - parking phase</bc> :
+<ul>
+<li>I intend to use a <em>ParkServiceGUI</em> provided by the <tt>ParkManagerService</tt>  to notify my interest in <i>entering</i> 
+my auto in the <tt>parking-area</tt> and to receive as answer the number <em>SLOTNUM</em> of a  free parking-slot  (<tt>1&lt;=SLOTNUM&lt;=6</tt>). 
+<tt>SLOTNUM<k>==0</k></tt> means that no free slot is available.</em>
+
+</li>
+<li>If <tt>SLOTNUM <k>>0</k></tt>, I move my car in front to the <tt>INDOOR</tt>, get out of the car and afterwards press a <em>CARENTER</em> button on the
+<em>ParkServiceGUI</em>. Afterwards, the <tt>transport trolley</tt> takes over my car and moves it from the <tt>INDOOR</tt> 
+to the selected <tt>parking-slot</tt>.
+The <tt>ParkServiceGUI</tt> will show to me a receipt that includes a (unique) <em>TOKENID</em>, 
+to be used in the <i>car pick up</i> phase.</li>
+</ul>
+
+As a <bc>client - car pick up phase</bc> :
+<ul>
+<li>I intend to use the <tt>ParkServiceGUI</tt> to submit the request to pick up my car, by sending the <tt>TOKENID</tt> previously received. </li>  
+<li>Afterwards, the <tt>transport trolley</tt>  takes over my car and moves it from its <tt>parking-slot</tt> to the <tt>OUTDOOR-area</tt>.</li>
+<li>I move the car, so to free the <tt>OUTDOOR-area</tt>.
+</li>
+ </ul>
+
+As a <bc>parking-manager</bc>:
+<ul>
+<li>I intend to use the <em>ParkServiceStatusGUI</em>  provided by the <tt>ParkManagerService</tt>
+to observe the <em>current state</em> of the <tt>parking area</tt>, including the value <tt>TA</tt> of the temperature,
+the state of the <tt>fan</tt> and the state of the <tt>transport trolley</tt> (<k>idle, working or stopped</k>).</li>
+<li>I intend to <em>stop</em> the <tt>transport trolley</tt> when <k>TA > TMAX</k>, activate the <tt>fan</tt> and 
+wait until <k>TA &lt; TMAX</k>. At this time, I stop the <tt>fan</tt> and resume the behavior of the <tt>transport trolley</tt>.
+Hopefully, the <b>start/stop</b> <ks>of the fan</ks> could also be automated by the <tt>ParkManagerService</tt>,
+while the <b>start/stop</b> <ks>of the transport trolley</ks> is always up to me.
+</li>
+
+<li>I expect that the <tt>ParkManagerService</tt> sends to me an <em>alarm</em> if it detectes that the <tt>OUTDOOR-area</tt>
+has not been cleaned within the <tt>DTFREE</tt> interval of time.</li>
+</ul>
+ 
+ 
+<h3>Requirements </h3>
+
+The <tt>ParkManagerService</tt>  should create the <tt>ParkServiceGUI</tt> (for the client) 
+and the <tt>ParkServiceStatusGUI</tt> (for the manager) and then perform the following tasks:
+
+
+<ul>
+ 
+<li><hr/>
+<em>acceptIN</em>: accept the request of a client to park the car if there is at least one <tt>parking-slot</tt> available,
+select a free slot identified with a unique <tt>SLOTNUM</tt>.<br/>
+A request of this type can be elaborated only when the <k><tt>INDOOR-area</tt> is free</k>, 
+and  the <tt>transport trolley</tt> is at <tt>home</tt> or working (<k>not stopped</k> by the manager). 
+If the <tt>INDOOR-area</tt> is already engaged by a car, the request is not immediately processed 
+(the client could simply wait or could - optionally - receive a proper notice). 
+<br/>
+  <li><em>informIN</em>: inform the client about the value of the <tt>SLOTNUM</tt>.</li> 
+If  <k>SLOTNUM>0</k>:
+  <ol>
+   <li><em>moveToIn</em>: move the <tt>transport trolley</tt> from its current localtion to the <tt>INDOOR</tt> ;</li>
+  <li><em>receipt</em>: send to the client a receipt including the value of the <tt>TOKENID</tt> ;</li> 
+  <li><em>moveToSlotIn</em>: move the <tt>transport trolley</tt> from the <tt>INDOOR</tt> to the selected <tt>parking-slot</tt>;</li>
+  <!-- <li>accept another request (<tt>acceptIN</tt> or <tt>acceptOUT</tt>). -->
+  <li><em>backToHome</em>: if no other request is present,  move the <tt>transport trolley</tt> to its <tt>home</tt> location,
+  else <em>acceptIN</em> or <em>acceptOUT</em>.</li> 
+  </ol>
+ </li>
+If <k>SLOTNUM==0</k>: 
+	<ul>
+	<li><em>moveToHome</em>: if not already at home, move the <tt>transport trolley</tt> to its <tt>home</tt> location.</li> 
+	</ul>
+</li>
+
+
+<li><hr/>
+<em>acceptOUT</em>: accept the request of a client to get out the car with <tt>TOKENID</tt>.
+A request of this type can be elaborated only when the <k><tt>OUTDOOR-area</tt> is free</k> 
+and  the <tt>transport trolley</tt> is at <tt>home</tt> or working (<k>not stopped</k> by the manager).
+If the <tt>OUTDOOR-area</tt> is still engaged by a car, the request is not immediately processed 
+(the client could simply wait or could - optionally - receive a proper notice).
+
+	<ol>
+	<li><em>findSlot</em>: deduce the number of the parking slot (<em>CARSLOTNUM</em>) from the <tt>TOKENID</tt>;</li>
+	<li><em>moveToSlotOut</em>: move the <tt>transport trolley</tt> from its current localtion to the <tt>CARSLOTNUM/parking-slot</tt> ;</li>
+	<li><em>moveToOut</em>: move the <tt>transport trolley</tt> to the <tt>OUTDOOR</tt> ;</li>
+	<li><em>moveToHome</em>: if no other request is present  move the <tt>transport trolley</tt> to its <tt>home</tt> location; <br/>
+	else <em>acceptIN</em> or <em>acceptOUT</em></li> 
+
+	</ol> 
+</li>
+<li>
+<hr/>
+<em>monitor</em>: update the <tt>ParkServiceStatusGUI</tt> with the required information about the state of the system.
+</li>
+
+<li>
+<hr/>
+<em>manage</em>: accept the request of the manager to stop/resume the behavior of the  <tt>transport trolley</tt>.
+</li>
+
+</ul>
+<h4>About the devices</h4>
+All the sensors (<tt>weigthsensor</tt>, <tt>outsonar</tt>, <tt>thermometer</tt> ) and the <tt>fan</tt> should be properly simulated
+by mock-objects or mock-actors.
+
+<h4>When using a real robot</h4>
+No further requirement.
+
+<h4>When available a Raspberry and a sonar</h4>
+The <tt>outsonar</tt> could be a real device. We can simulate the presence/absence of a car.
+
+    <h4>When using <k>only</k> the virtual robot or <k>no real sonar</k> available</h4>
+Consider the new requirement:
+<ul>
+<li><ks>authorize</ks>: allow a manager to use the <tt>ParkServiceStatusGUI</tt> only if she/he owns <bc>proper permissions</bc>.</li>
+ 
+</ul>
+ 
+
+ 
+
+<h2>Requirement analysis</h2>
+During a meeting with the client the following definitions are clarified: 
+<ul>
+<li><ks>transport trolley</ks>: a DDR robot able to move a car. The car will be loaded on a platform placed behind or in front of the robot.</li>
+<li><ks>home location</ks>: position where the robot starts when the system is started. Located in the upper left corner, facing south.  </li>
+<li><ks>parking-area</ks>: the area where the robot can move and the cars can park. People cannot access this area. This area is surrounded by walls, except for an entrance and an exit.</li>
+<li><ks>indoor-area</ks>: area where the car arrive, and the robot can take it. This area is equipped with a weight sonar</li>
+<li><ks>weightsensor</ks>: device that can detect the weight above it.</li>
+<li><ks>outdoor-area</ks>: area where the robot carries a car following a picking request. This area must be cleared by the user within the time DTFREE.  </li>
+<li><ks>outsonar</ks>: device capable of detect if the outdoor-area is free or not. </li>
+<li><ks>parking-slots</ks>: places where cars can be parked. The transport trolley cannot transit on these slots. </li>
+<li><ks>thermometer</ks>: device capable of detect the temperature of the parking area. </li>
+<li><ks>fan</ks>: device capable of reducing the temperature of the parking area. </li>
+<li><ks>map</ks>: map of the area, the locations marked with the symbol X represents the walls or the parking slots, the location marked with "r" represents the actual position of the transport trolley. </li>
+<li><ks>fixed obstacles</ks>: the walls. No other obstacles are present in the area.  </li>
+<li><ks>parking-manager</ks>: human being which supervises the state of the parking-area and handles critical situations.  </li>
+<li><ks>tokenid</ks>: numeric identifier that allows you to refer to the parking number and pickup the car.  </li>
+<li><ks>robot</ks>: a device capable of moving by receiving commands via the network, as reported in
+<a href="VirtualRobot2021.html#commands" target="web">VirtualRobot2021.html</a>.
+ </li>
+
+</ul>
+
+Regarding actions (verbs):
+<ul>
+<li><ks>stop (of the robot)</ks>: when the temperature detected by thermometer is higher then TMAX, the parking manager disables robot operations. If the robot was moving, it will have to stop immediately. </li>
+<li><ks>start (of the fan)</ks>: when the robot has stopped, the parking manager must turn on the fan.  </li>
+<li><ks>stop (of the fan)</ks>: when the temperature detected by thermometer is lower then TMAX, the parking manager can turn off the fan.  </li>
+<li><ks>start (of the robot)</ks>: when the temperature detected by thermometer is lower then TMAX and the fan is turned off, the parking manager can turn on the robot.  </li>
+<li><ks>parking-area</ks>: the area where the robot can move and the cars can park. People cannot access this area. This area is surrounded by walls, except for an entrance and an exit.</li>
+<li><ks>indoor-area</ks>: area where the car arrive, and the robot can take it. This area is equipped with a weight sonar</li>
+</ul>
+
+<h3>Refined user story</h3>
+
+As a <bc>client - parking phase</bc> :
+<ul>
+<li>First I approach the weight sensor with the car. If the weight is adequate for the parking conditions, the number of available spaces will appear on the <em>ParkServiceGUI</em>.</li>
+<li>If there is at least one space, the <em>CAR ENTER</em> button will be enabled.</li>
+<li>Then, I move the car to the indoor area (the area where the robot can load the car and take it into the parking lot).</li>
+<li>I get out of the vehicle and press the CAR ENTER button.</li>
+<li>An alphanumeric <tt>TOKENID</tt> will appear in the graphical interface, which can be used in the withdrawal phase.</li>
+</ul>
+
+As a <bc>client - car pick up phase</bc> :
+<ul>
+<li>First of all I enter the <tt>TOKENID</tt> that I obtained during the parking phase on the <em>ParkServiceGUI</em>.</li>
+<li>I press the <em>RITIRO AUTO</em> button.</li>
+
+<li>If the robot is engaged in other operations, a message will appear on the screen informing me to wait a few moments. No action is required on my part, because the system automatically queues my request and will handle it as soon as possible.<br>If the robot is free, the request will be handled immediately and the car will be taken to the outdoor area.</li>
+
+</ul>
+
+
+
+As a <bc>parking-manager</bc>:
+<ul>
+<li>I intend to use the <em>ParkServiceStatusGUI</em>  provided by the <tt>ParkManagerService</tt>
+to monitor the status of the parking-area. If I notice that the temperature becomes too high and the alarm is activated, I have to press the <em>STOP ROBOT</em> button. By pressing this button again, I can resume the robot.</li>
+<li>The management of the fan is fully automated and communicates directly with the thermometer which manages its switching on and off. I cannot act manually to turn the fan off or on.
+</li>
+
+<li>In case the outdoor is occupied for more than <tt>DTFREE</tt> time, an alarm will appear on the screen. The alarm will be turned off as soon as the exit is freed.</li>
+</ul>
+
+<h3>Map specifications</h3>
+The client provides us with a map visible in the parkingMap.txt file, and through a figure indicates the approximate position of the elements inside the parking-area.
+Let's clarify the position of them better:
+<ul>
+
+<li>the HOME is positioned in the cell (0, 0) from which the robot starts.</li>
+<li>the INDOOR-area is positioned in the cell (5, 0) and represents the place where the robot must go to load the car.</li>
+<li>the OUTDOOR-area is positioned in the cell (5, 4) and represents the place where the robot must go to deliver the car to the customer.</li>
+<li>the parking slots are placed in cells (2, 1), (2, 2), (2, 3), (3, 1), (3, 2), (3, 3). In this case the robot must position itself in the cell adjacent to the slot in which it has to insert / withdraw the car. (The robot cannot access one of the cells reserved for the car park.) For example, to park the car in the cell (3, 1) the robot must position itself in the cell (4, 1); it cannot position itself in cell (2, 1) even if it is free.</li>
+</ul>
+
+<h2>Problem analysis</h2>
+<h3>Relevant aspects</h3>
+<ol>
+<li>
+Create a distributed system consisting of six macro-components:
+	<ul>
+	<li>the (virtual) robot </li>
+	<li>the outsonar </li>
+	<li>the thermometer</li>
+	<li>the fan </li>
+	<li>the weight-sensor </li>
+	<li>our application (ParkManagerService) which sends commands to the robot in order to satisfy the requirements</li>
+	</ul>
+</li>
+<li>For the construction of the system we use the QAK meta model. The components mentioned above represent actors of the model.</li>
+<li>Each context owns a set <k>QActors</k> that can interact with components working on a different node,  by means of the following protcols:
+<ul>
+<li><ks>TCP</ks>  : on the port specified by the <k>Context</k></li>
+<li><ks>CoAP</ks> : on the port specified by the <k>Context</k> </li>
+<li><ks>MQTT</ks> : using the broker specified in the <k>mqttBroker</k> declaration</li>
+</ul>
+</li>
+<li>In the Wenv, the robot can be controlled via the network in two different ways:
+	<ul>
+	<li>sending messages to port 8090 with HTTP POST protocol</li>
+	<li>sending messages to port 8091 using a websocket</li>
+	</ul>
+</li>
+<li>
+In reference to the communication with the WEnv you can rely on the BasicRobot2021 project which allows you to issue commands directly via qak. More information can be found <a href="https://htmlpreview.github.io/?https://github.com/anatali/issLab2021/blob/main/it.unibo.qak21.basicrobot/userDocs/basicrobot2021.html">here.</a><br>
+The WEnv uses a request response model, however for some features of the application it could be convenient to use a dispatch type communication.
+</li>
+
+</ol>
+<h3>Logical architecture</h3>
+<center><img src="./img/arch1.jpg"></center>
+The architecture can be summarized with the diagram above. The parkManagerService represents the core of the application and deals with other actors and entities.<br><br>
+<ul>
+<li><ks>ParkManagerService <-> ParkServiceGUI: </ks>The ParkManagerService communicates with the Client thanks to the ParkServiceGUI actor.
+The relationship between these two actors concerns the phase of requesting entry and exit from the car park. It must therefore be able to handle the acceptIN and acceptOUT methods. Once the acceptIN has been received, the ParkManagerService will communicate to the ParkServiceGUI the number of free slots through the informIN status.
+The user story provided by the client specifies that the customer will be the one to check the free slots and request entry only if the car park is not complete. As a precaution, this control must also be implemented in the ParkManagerService to prevent entry being requested in the event of a complete parking lot.
+<br>
+The ParkManagerService must also provide a receipt to the customer containing a unique TOKEN. It will be the customer's responsibility to keep this TOKEN, as it will be used to collect the car. The TOKEN must be constructed in such a way that it can be traced back to the slot id.
+</li>
+<li><ks>ParkManagerService <-> Trolley: </ks>The ParkManagerService must also communicate with the Trolley to issue movement commands. The use of the websocket could prove to be more flexible (as it allows to receive information emitted by WEnv in a 'spontaneous' way) and more efficient (as it reduces the protocol hierarchy).<br>
+The trolley can be managed with the commands specified at <a href="https://htmlpreview.github.io/?https://github.com/anatali/issLab2021/blob/main/it.unibo.virtualRobot2020/userDocs/VirtualRobot2021.html" target="web" >this link.</a>
+</li>
+<li><ks>ParkManagerService <-> ParkServiceStatusGUI: </ks>The ParkServiceStatusGUI must display the current system status to the ParkingManager. To do this, it communicates with the ParkManagerService and retrieves information on the parking status such as free and occupied slots, fan on or off, displays outdoor and high temperature alarms, robot status (idle, working, stop).
+The ParkServiceStatusGUI is also equipped with a button that allows the ParkingManager to stop the robot (STOP state) and resume the execution of the robot.
+</li>
+<li><ks>ParkManagerService <-> Sensors: </ks> The ParkManagerService receives information on the parking status from the sensors (outsonar, thermometer, weightsensor). Once received, this information will be communicated to the ParkServiceStatusGUI.
+The sensors will send an event or a message only in the event of a change of state; in this way the number of messages exchanged will be reduced with a saving of bandwidth. A cons of this decision is that the sensor will have to keep track of the previous state and check each time to see if the state has changed. However, the pros are more prominent.
+</li>
+</ul>
+
+<h4>ParkManagerService state diagram </h4>
+<center><img src="./img/stati.jpg"></center>
+The client's specifications lead us to represent the state diagram as shown above.
+The words indicated on the arrows represent the conditions of the change of state, if they are not present the change always occurs at the end of the state.<br>
+If at a particular time the acceptin or acceptout cannot be executed (for example for occupied indoors or outdoors) the requests are put on hold.<br>
+Additional features described by the client are:
+<ul>
+<li><ks>manage:</ks> that accepts the manager's requests to stop and resume the robot. In this case the robot must restart from the state in which it was stopped.</li>
+<li><ks>monitor:</ks> which transmits information to the ParkManagerServiceGUI for updating the parameters.</li>
+</ul>
+
+
+
+
+
+
+<h4>ParkManagerService GUI example</h4>
+A possible example of a graphical interface that can be used for the ParkingManager is the following:
+<center><img src="./img/guimanager.jpg"></center>
+The figure on the left represents the current parking status. The occupied seats are shown in red and those still free in green.
+On the right side there is:
+<ul>
+
+<li> the temperature in degrees and the signal if this exceeds the TMAX threshold (in this case the circle turns red)</li>
+<li> the status of the fan represented by a CheckBox (when selected the fan is running). The activation of the fan is not the responsibility of the Manager, but will be managed automatically, therefore the Checkbox cannot be selected.</li>
+<li> the outdoor alarm: if the output is not released within the DTFREE time, the circle turns red.</li>
+<li> the status of the trolley: represented by a text field that can contain the 3 robot states (IDLE; WORKING; STOP)</li>
+</ul>
+In the lower center is the button that the Manager will have to press when the temperature is too high. If pressed when the button shows Stop robot, the button text will change to Start robot.
+
+
+
+
+
+<h4>ParkService GUI example</h4>
+A possible example of a graphical interface that can be used by the users is the following:
+<center><img src="./img/guiuser.jpg"></center>
+On the left side there are the useful details to enter the car park (in order):
+<ul>
+<li> the number of free seats (updated when the car is positioned on the weightsensor)</li>
+<li> the CARENTER button which will be active only in case of free seats and adequate weight.</li>
+<li> the token issued when parking is successful.</li>
+</ul>
+On the right side there are the useful details for exiting the car park (in order):
+<ul>
+<li> a text area in which to enter the TOKEN ID.</li>
+<li> a button to declare the willingness to collect the car.</li>
+</ul>
+<h3>Problems identified</h3>
+
+<ol>
+<li><h4>Moving the car from the indoor area</h4>
+When the robot picks up the car from the indoor, the car is outside the walls. In this case, particular attention must be paid during handling. A rotation of the robot in this position could cause the machine to hit the wall.
+After a meeting with the client, he clarified that this can be overlooked.
+</li>
+
+<li><h4>Weight-sensor</h4>
+To prevent an object other than a car from entering the parking-area and interfering with the system, it is necessary to establish a threshold below which the entry is not allowed. The value of this threshold will be decided in the following stages.<br><br>
+<ul>
+For the management of the weight sensor it is possible to use different communication protocols:
+<li>Interrogate the sensor with a response request, each time the CAR ENTER button is pressed.<br><tt>Pro:</tt> the sensor is interrogated only when a user really wants to enter the parking lot. <br> <k>Cons:</k> This solution involves a waste of bandwidth and a slowdown of the system; A user can press the button even if the weight is not adequate by overloading the system.</li>
+<li>Continuously interrogate the sensor asking for the weight detected (Polling type communication) and enable the CARENTER button only when the weight is adequate.<br><tt>Pro:</tt> The button is enabled only if the weight is adequate, preventing it from being pressed unnecessarily.<br>
+<k>Cons:</k>The continuous interrogation of the sensor results in a strong slowdown of the system and a waste of bandwidth; Furthermore, queries are also carried out when no user wants to access the car park.</li>
+<li>Have the sensor send a communication as soon as it detects a significant weight change.<br><tt>Pro:</tt>No waste of bandwidth because the sensor sends a signal only in case of need.<br><k>Cons:</k>There are no significant cons.</li>
+</ul>
+Since in the user story provided by the client it is not specified how the weightsensor must interact with the parking phase, a possible solution is to show the number of slots available as soon as a car positions itself on the weight sensor. The pro of this decision is that it avoids answering requests for cars that are not on the weight sensor. It will not be possible to proceed with CARENTER requests.
+The cons of this decision is that a person who is not near the parking lot with the car cannot know if the parking lot is full or not.
+</li>
+
+<li><h4>Dimensions of the car</h4>
+To prevent a large car from occupying more than one parking space, it is assumed that all cars entering the parking area have a maximum length RD. So, they occupy only 1 cell of the map.
+</li>
+
+<li><h4>Stop of the robot during operations</h4>
+In the event that the robot is stopped by the operator during a movement operation, the robot must stop in the position in which it is.
+When conditions allow, the robot's operations will have to resume where they left off.
+It is assumed that the customer waits for the robot to resume execution, ending the process.<br><br>
+Another issue that needs attention is the concurrency of operations. Especially if the robot is stopped by the manager before it has completed a parking or car collection operation, many requests could be queued. When resuming, the robot must first complete the operation that was interrupted and then manage the other requests.
+To do this, one option is to treat park and pickup operations as atomic operations. <br><tt>Pros:</tt> the robot does not need to "remember" where it was left in the operation.<br>
+<k>Cons:</k> since the robot cannot be stopped during the operation, if the temperature is too high the robot could be damaged.<br><br>
+Another solution is to save the exact point where the robot was stopped and the operation that was in progress. <br><tt>Pros: </tt>the execution can be resumed at the point where the robot was stopped; the robot does not perform too many operations with high temperature.<br>
+<k>Cons:</k> increased implementation difficulty.
+</li>
+
+<li><h4>Temperature > TMAX</h4>
+Considering the automated management of the fan, it is possible that the ParkingManager, for a distraction, forgets to turn off the robot when the temperature is above the TMAX threshold. To avoid damage to the robot, it is advisable to insert an alarm that draws the manager's attention (hopefully visual and audible).<br><br>
+Automated fan management was chosen as the following pros and cons were considered:<br>
+<tt>Pros:</tt> the manager cannot forget to turn on the fan when the temperature is high; the robot will not be damaged by human errors.<br>
+<k>Cons:</k> the manager cannot decide to keep the fan on even when the temperature is below the TMAX threshold. This results in a higher stop frequency of the robot when the temperature drops slightly below the threshold and shortly after exceeds the threshold again.
+</li>
+
+<li><h4>User into the car</h4>
+The specifications provided by the customer do not specify the possibility that a user remains inside the car after pressing the CARENTER button. To avoid this, the button must be placed in a position away from the indoor area. In this way the user is forced to get out of the vehicle to press the button.
+</li>
+
+<li><h4>Token not valid</h4>
+To prevent a user from entering an invalid token and being able to collect another person's car, a verification system must be in place. The tokens issued must then be stored. Once the car has been picked up, its token will need to be deleted or disabled.
+</li>
+
+</ol>
+
+
+<h3>SPRINT 1</h3>
+As a first sprint we have introduced the following simplifications:
+<ul>
+<li><ks>no connection with the robot</ks>: the robot will not make any movement. The actions will be simulated considering a waiting time.  </li>
+<li><ks>GUI not implemented</ks>: The parking manager and parking service gui will not be implemented in this phase. </li>
+<li><ks>no thermometer and fan: </ks> these two devices are not considered during this phase</li>
+
+
+</ul>It is assumed that the parking request is sent only if there is at least one free space. This filter will be charged to the GUI which will not forward any CAR ENTER type request in case of all slot are occupied.
+
+Since the ParkManager is not simulated in this phase, the alarm is sent to the parkmanagerservice actor.
+
+<h4>Logical Architecture</h4>
+The diagram below concerns only the components considered in this SPRINT, and not the entire final system.<br><br>
+<table style="width:100%" border="1">
+				<tbody><tr>
+					<td style="width:50%;">Our system, as a first sprint, is composed by these actor: <br><br>
+<ul>
+<li><ks>parkmanagerservice: </ks>this actor manage the entrance and the exit of the car to/from the parking-area, before performing actions checks the robot status. In this phase the robot can assume two different status (idle, working). Stop status is not handled now.</li>
+<li><ks>weight sensor: </ks> this actor communicates with the parkmanagerservice to notify a car's interest in entering the parking lot. It performs weight control, preventing objects different than cars from attempting to enter in the parking-area. </li>
+<li><ks>outsonar: </ks> this actor simulate the presence or not of a car in the outdoor-area. It also send an alarm to parkmanagerservice if a car stay in the outdoor-area more than DTFREE time. </li>
+<li><ks>client: </ks> this actor simulate the actions of CARENTER and pickup of the car, including the car removal from the outdoor-area. </li>
+
+</ul>
+					
+					</td>
+					<td>
+						
+					<center><img src="./img/attoris2.1.jpg"></center>
+						
+					</td>
+				</tr>
+				<tr>
+
+</tbody></table>
+<br><br>
+In the figure shown above we specify that:
+
+<ul>
+<li> a dispatch or an event can be used for communication between <ks>weightsensor (or outsonar)</ks> and <ks>parkmanagerservice</ks>. A request - response communication is not necessary or indicated, as there is no need to have a response. The use of the latter protocol would involve a consumption of bandwidth.</li>
+<li>for the communication between the <ks>client</ks> and the <ks>parkmanagerservice</ks>, a request - response protocol is instead necessary because the client needs to receive responses to the requests it sends to the parkmanagerservice, such as the reception of the token after pressing the car enter button.</li>
+</ul>
+
+<h4>Executable model - Sprint 1</h4>
+A first executable model is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/ParcheggioAuto1/src/parcheggio.qak" >parcheggio.qak</a> file.<br>
+This model represents a single customer requesting entry and exit of the car from the parking lot.<br>
+The model is compliant with the specifications indicated in the diagram shown above, with the addition of the timeout state which allows to detect the occupation of the output for more than DTFREE time.<br><br>
+In this model, as indicated in the chapter Problems Identified, the acceptin is invoked directly by the weightsensor, and subsequent communications directly involve the client. <br>b
+To simulate the behavior of the sonar, the parkmanagerservice warns the outsonar actor that a car has been placed outdoors. Once this message is received, the outsonar starts a timer. If the timer reaches the DTFREE time, it sends an alarm to the parkmanagerservice.
+When the car is removed, the client sends an event to the sonar which will take care of communicating the free outdoor status to the parkmanagerservice.
+
+
+
+<h3>SPRINT 2</h3>
+As a second sprint we have introduced the following simplifications:
+<ul>
+<li><ks>limited connection with the robot</ks>: The robot performs only one movement to reach the indoor area starting from the home position. All other movements are not managed at this stage and will be simulated considering a waiting time.  </li>
+<li><ks>ParkServiceGUI not implemented</ks>: The parking service gui will not be implemented in this phase. </li>
+
+</ul>
+We have introduced the following functionality:
+<ul>
+<li>Addition of the ParkServiceStatusGUI.</li>
+<li>Addition of thermometer and fan and respective communications (alarms, ...)</li>
+</ul>
+
+
+
+<h4>Logical Architecture</h4>
+The diagram below concerns only the components considered in this SPRINT, and not the entire final system.<br>
+Compared to the previous representation, the messages used in the communication have been specified.<br><br>
+<table style="width:100%" border="1">
+				<tbody><tr>
+					<td style="width:50%;">Our system, as a second sprint, includes the following actors (in addition to the previous ones): <br><br>
+<ul>
+<li><ks>parkservicestatusGUI: </ks>The parkservicestatusGUI takes care of updating the graphical interface, it retrieves the information from the parkmanagerservice relating to the status of the robot, the occupation of the parking spaces, and the alarm status of the outdoor.
+It directly retrieves the temperature and status of the fan from the sensors/device (thermometer and fan).
+The ParkServiceGUI was implemented by creating a graphic inspired by the model indicated in the problem analysis phase.
+This actor also takes care of transmitting the start and stop events to the ParkManagerService, useful for stopping and resuming the execution of the robot according to the ambient temperature.</li>
+<li><ks>fan: </ks> The fan is an actor that is able to receive two commands: on and off. It also takes care of communicating its status to the parkservicestatusGUI.
+The conditions for switching the fan on and off must be managed by another actor. </li>
+<li><ks>thermometer: </ks> the thermometer is an actor able to simulate the temperature change by emitting an alarm signal in case the degrees exceed the TMAX threshold.
+At each temperature change, it also takes care of communicating the new value to the parkservicestatusGUI. </li>
+<li><ks>basicrobot: </ks>The trolley is represented by a basic robot actor who receives the movement commands from the parkmanagerservice, listening on port 8020.</li>
+<br><br>
+<li><ks>parkmanagerservice: </ks>In addition to what is indicated above (Sprint 1), in this phase the robot can assume all 3 possible states (IDLE, WORKING, STOP). In fact, it can receive the stop event from the parkservicestatusGUI, bringing the robot to a stop state. In this case the robot will have to wait for the start event to resume its normal execution. As shown in the figure, the parkmanagerservice will be able to send updates on its status and occupation of the parking to the graphical interface.</li>
+
+</ul>
+					
+					</td>
+					<td>
+						
+					<center><img src="./img/attoris3.jpg"></center>
+						
+					</td>
+				</tr>
+				<tr>
+
+</tbody></table>
+<br><br>
+In the figure shown above we specify that:
+<ul>
+<li> a dispatch or an event can be used for communication between <ks>weightsensor (or outsonar)</ks> and <ks>parkmanagerservice</ks>. A request - response communication is not necessary or indicated, as there is no need to have a response. The use of the latter protocol would involve a consumption of bandwidth.</li>
+<li>for the communication between the <ks>client</ks> and the <ks>parkmanagerservice</ks>, a request - response protocol is instead necessary because the client needs to receive responses to the requests it sends to the parkmanagerservice, such as the reception of the token after pressing the car enter button.</li>
+<li>events or dispatches can be used for communication between <ks>parkservicestatusGUI</ks> and <ks>parkmanagerservice</ks>. It is preferable to use events for the buttons available on the GUI and dispatch for the GUI to receive system status information. The start and stop events shown in the figure are sent to the parkmanagerservice.</li>
+<li>the <ks>fan</ks> can emit an event or a dispatch. The figure shows an event that is sent to the <ks>parkservicestatusGUI</ks> to communicate the status change of the fan.</li>
+<li>the <ks>thermometer</ks> can send an event or a dispatch. The figure shows the high temperature events and the temperature change update sent to the <ks>parkservicestatusGUI</ks>.</li></ul>
+These last 3 elements do not require a request response communication, as they do not need to receive replies after sending the information of interest.
+<br>
+<ul>
+<li>when the <ks>parkmanagerservice</ks> receives the event that signals the arrival of a new car from the <ks>weightsensor</ks>, it sends a dispatch (or event) to the <ks>client</ks> containing the number of slots available.</li>
+<li>the <ks>basicrobot</ks> communicates with the <ks>parkmanagerservice</ks> by receiving movement commands. These messages are not represented in the figure.</li>
+</ul>
+
+<h4>Executable model - Sprint 2</h4>
+The second executable model is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/ParcheggioAuto2/src/parcheggio.qak" target="web">parcheggio.qak</a> file.<br>
+This executable model is compliant with the sprint 2 specifications indicated in the paragraphs above.
+
+
+<h3>SPRINT 3</h3>
+As a third sprint we have introduced the following simplifications:
+<ul>
+<li><ks>limited connection with the robot</ks>: The robot performs only some movements to reach the indoor area starting from the home position, and to reach the first slot from the indoor area. All other movements are not managed at this stage and will be simulated considering a waiting time.  </li>
+
+
+</ul>
+We have introduced the following functionality:
+<ul>
+<li>Addition of the ParkServiceGUI.</li>
+</ul>
+
+
+
+<h4>Logical Architecture</h4>
+The diagram below concerns only the components considered in this SPRINT, and not the entire final system.<br>
+Compared to the previous representation, the messages used in the communication have been specified.<br><br>
+<table style="width:100%" border="1">
+				<tbody><tr>
+					<td style="width:50%;">Our system, as a third sprint, includes the following actors (in addition to the previous ones): <br><br>
+<ul>
+<li><ks>parkserviceGUI: </ks>The parkservicegui takes care of updating the graphical interface that can be used by the client. It communicates directly with the parkmanager service to send the commands given by the user and to receive information on the status of the car park (free slots, activation of the CARENTER button with adequate weight).
+It must also receive the token generated by the parkmanagerservice and show it to the client.
+As for the pickup-phase, he must forward the token entered by the user (by means of a keyboard) to the parkmanagerservice and inform him in case the outdoor is occupied (for example with a waiting message).</li>
+
+
+</ul>
+					
+					</td>
+					<td>
+						
+					<center><img src="./img/attoris4.jpg"></center>
+						
+					</td>
+				</tr>
+				<tr>
+
+</tbody></table>
+<br><br>
+In the figure shown above we specify that:
+<ul>
+<li> The customer uses the <ks>parkserviceGUI</ks>.</li>
+</ul>
+
+<h4>Executable model - Sprint 3</h4>
+The third executable model is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/ParcheggioAuto3/src/parcheggio.qak" target="web">parcheggio.qak</a> file.<br>
+This executable model is compliant with the sprint 3 specifications indicated in the paragraphs above.
+
+<h3>SPRINT 4</h3>
+In this (final) sprint, all the client's requirements have been met and clarified. No simplifications have been introduced.<br>
+We specify more clearly the communication between parkmanagerservice and basicrobot, as in this sprint the complete communication and the execution of all the steps have been achieved.<br><br>
+To send the moves we recommend the use of <k>websockets</k>, in which it is not necessary to receive a response, as having a map already provided by the client we can directly issue the movement commands on the path to reach the destination.<br>
+The use of an <k>HTTP-request response</k> communication could be useful in the testing phase, as thanks to the answers sent by the basic robot it is possible to verify some anomalous behaviors of the trolley.<br><br>
+To manage the paths from one position to another of the robot, you can use the <k>planner</k>. The planner is an already available and complete tool, used for other similar projects.
+The specifications of this tool are available in <a href="https://htmlpreview.github.io/?https://github.com/anatali/issLab2021/blob/master/it.unibo.cautiousExplorer/userDocs/LabPlanner2021.html" target="web">this document</a>.
+Once the map file has been supplied to the planner, it will provide all the moves to carry out to move from one cell to another.<br><br>
+A feature that has been added compared to previous sprints, required by the client is the authentication phase: <ks>authorize</ks>.
+Authentication consists in showing a login GUI through which the manager with a username and password can access the parkservicestatusGUI.<br>
+Given the possibility that, also in the future, it is possible to add different managers who access the graphic interface, it is advisable to use a database containing the access data to the system. These data, especially passwords, must be encrypted with appropriate security standards.<br>
+The login interface will then have to query the database to verify that the data entered is correct.
+
+<h2>Test plans</h2> 
+
+Appropriate test plans were created for the three most important phases of the project, in order to verify the correct functioning of the trolley.
+the <bc> client - parking phase</bc> has been tested, in which the following occur:
+<ul>
+<li> updating the number of free slots</li>
+<li>sending a formally valid token</li>
+<li>the movement of the robot in the cell corresponding to the token sent</li>
+<li>the repositioning of the trolley in the home position.</li>
+</ul>
+
+The code for this test is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/Test/ParkingAndPickupTest/ParkingTest.kt" target="web">ParkingTest.kt</a> file.
+<br><br>
+Regarding the <bc>client - car pickup phase</bc>, we have verified that:
+<ul>
+<li>if the outdoor is free, the Acceptout is accepted</li>
+<li>the number of free places is correctly updated</li>
+<li>the robot positions itself correctly in the car collection cell (corresponding to the token)</li>
+<li>the robot positions itself correctly in the outdoor cell</li>
+<li>the robot returns to the home position.</li>
+</ul>
+The code for this test is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/Test/ParkingAndPickupTest/PickupTest.kt" target="web">PickupTest.kt</a> file.
+The first two test plans use the following executable model: <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/Test/ParkingAndPickupTest/parcheggio.qak" target="web">parcheggio.qak</a>.
+
+<br><br>
+As a <bc>parking manager</bc>, we have checked:
+<ul>
+<li>the correct updating of the robot status in the various steps (IDLE, WORKING, STOP)</li>
+<li>update of the parking status (which spaces are occupied and which are free)</li>
+<li>the reception of the outdoor busy alarm message</li>
+<li>the revocation of the alarm when the outdoor is released.</li>
+</ul>
+The code for this test is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/Test/ParkManagerTest/ParkManagerTest.kt" target="web">ParkManagerTest.kt</a> file.
+This test plans uses the following executable model: <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/Test/ParkManagerTest/parcheggio.qak" target="web">parcheggio.qak</a>.
+
+
+<h2>Project</h2>
+
+<h3>Final architecture</h3>
+<center><img src="./img/attorip.jpg"></center><br><br>
+With reference to the architecture represented in the figure above, we specify that no significant changes have been made respect to the logical model.<br>
+Below, we specify the design choices that were left to the discretion of the designers, such as the choice between some communication methods.
+
+<h4>parkservicestatusGUI</h4>
+To carry out the stop and resume functions of the robot, we have chosen to use a transmission of <k>events</k> as they are more suitable for the purpose (they are associated with buttons). In fact, modern design techniques aim to always use events in association with the pressure of buttons (event-driven model).
+The recipient of these two events is the <ks>parkmanagerservice</ks>.
+
+<h4>fan</h4>
+The fan can communicate the change of state at any time. For this reason it was preferred to use an <k>event</k> to communicate the new status. It should be noted that the event will be transmitted only in the event of a change from on to off or vice versa, to reduce bandwidth consumption.
+The recipient of this event is the <ks>parkservicestatusGUI</ks>. We have chosen not to send this event to parkmanagerservice to ensure a very responsive graphical interface and not to overload the other components.
+
+<h4>weightsensor</h4>
+The weightsensor can send a weight at any time, too. So, the design choice fell on an <k>event-based</k> communication. Unlike the fan, where it was necessary to communicate a change of state, in this case it is not necessary to send any data. It is enough simply to notify that a new car is near the indoor.<br>
+The sensor does not send signals when the weight is insufficient, resulting in a saving of resources.
+
+<h4>outsonar</h4>
+For the outsonar we have chosen to use an <k>event</k> model. Specifically, it can send two types of events: one to signal the outdoor alarm and one to signal the evacuation of the outdoor.
+The outdoor is made occupied directly by the parkmanagerservice when it deposits the car. Since the occupied outdoor status is stored directly in the parkmanagerservice, it is possible to avoid interrogating the sensor every time a car requests the acceptout.<br>
+The internal state will be changed when the uscitalibera(true) event is received.
+
+<h4>thermometer</h4>
+<k>Event</k> communication was also chosen for the thermometer. Specifically, it sends two types of events: one to signal the switching on or off of the temperature alarm and one to communicate the current temperature.
+In the first case the alarm event is sent directly to the <ks>fan</ks> so that it can switch on / off automatically without human intervention.
+In the second case, the temperature is sent directly to the <ks>parkservicestatusGUI</ks> to show it to the manager. We have chosen not to send this event to parkmanagerservice to ensure a very responsive graphical interface and not to overload the other components.
+
+<h4>parkserviceGUI</h4>
+In the parkserviceGUI it was chosen to use a <k>request-response</k> protocol for sending the carenter and receiving the receipt. On this one could not operate otherwise as it is necessary to wait for the answer to be shown to the user.
+The same protocol was used to manage the pressure of the <em>RITIRO AUTO</em> button as also in this case it was necessary to show a response to the user.
+
+<h4>parkmanagerservice</h4>
+The parkmanagerservice is the most complex component of the context as it has to deal with managing the correct functioning of most of the components. In addition to managing the <k>request-response </k> protocol for sending responses to <ks>parkserviceGUI</ks>, we have chosen to use a <k>dispatch</k> communication for: sending the number of free slots to the client, changing the status of the car park to be communicated to <ks>parkservicestatusGUI</ks>,...<br>
+The first dispatch is sent when an event is received from the weightsensor, at which point the parkserviceGUI, if at least one place is available, must enable the <em>CAR ENTER</em> button to continue the operations.<br>
+Two more dispatches are sent to the parkservicestatusGUI to signal which car park has been occupied and to notify the robot status change.<br>
+Other dispatches are sent to the parkservicestatusGUI to report the vacancy of a parking slots, the switching on / off of the outdoor alarm.
+
+<h4>Wenv</h4>
+The Wenv is the virtual environment that makes the trolley. It is able to perform the moves within the room. Such moves are imparted by the basicrobot through both <k>HTTP</k> and <k>websocket</k> connections.
+
+<h3>Used technologies</h3>
+For the realization of the entire system, the executable models created in the analysis phase were extremely important. Thanks to the <k>QAK model</k>, in fact, it was possible to easily generate kotlin code and manage the passages between the various application states very well, as well as solving concurrency problems. The kotlin code generated by the QAK could be used directly for the design of the final system.<br><br>
+As for the graphical interface, it was created with <k>Java.awt</k> technology. Although AWT is an outdated technology, it is very simple to use, for this reason and, since advanced graphic interfaces were not required by the client, we decided to use it.
+If, in the future, it is necessary to expand the graphical interface using other technologies, the operation will not be very expensive as it will be possible to replace only the classes belonging to the graphics.<br><br>
+
+As for the authentication phase, in a real case, the best solution concerns the use of a database residing on the <k>MySQL DBMS</k>. In this way, once the Login button is pressed, a connection is made and the user table is queried. The database schema, since it has to manage a single functionality, is made up of the Users table only: Users(<U>email</U>, password). The email field is stored in clear text and consists of a VARCHAR (50), while the password field will contain the sha256 hash of the password chosen by the user. Due to the complexity of deployment for educational purposes, the implementation of the application will not take this implementation into account.<br><br>
+
+The robot and the layout of the parking area were instead provided by the client in the form of a <k>docker</k> image available here: docker.io/natbodocker/virtualrobotdisi:2.0 .
+
+<h3>Graphic interfaces created</h3>
+<center><img src="./img/autenticazione.jpg"><br><ks>authorize</ks> (For testing use email: admin, pass: admin)</center><br><br>
+<center><img src="./img/parkservicestatus.jpg"><br><ks>ParkServiceStatusGUI</ks></center><br><br>
+<center><img src="./img/parkservice.jpg"><br><ks>ParkServiceGUI</ks></center><br><br>
+
+The graphic interfaces have been created respecting the indications and examples provided in the analysis phase.
+
+<h2>Testing</h2>
+In addition to the tests performed on the executable models provided in the analysis phase, a log file was created to verify the correct functioning of the entire application, even after interactions with the user. <br>
+This file must be processed and analyzed by the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/ParcheggioAuto4/test/Test2.kt" target="web">Test2.kt</a> test class created for the purpose.
+This class, containing <k>JUnit4</k> tests, will have to be started after the main application has finished its execution.
+
+
+<h2>Workplan</h2>
+
+<h4>Sprint 1</h4>
+The first sprint includes:
+<ul>
+<li>Parkmanagerservice behavior with only one request (one client).</li>
+<li>Interaction with weightsensor and outsonar.</li>
+</ul>
+This sprint will be completed in 2 working days and will be delivered on 11 July.
+
+<h4>Sprint 2</h4>
+The second sprint includes:
+<ul>
+<li>Addition of the ParkServiceStatusGUI.</li>
+<li>Addition of thermometer and ventilator and respective communications (alarms, ...)</li>
+<li>A first communication with the robot: the robot starts to follow the paths to reach the indoor area.</li>
+</ul>
+This sprint will start on 11 July and will be completed within approximately 3 working days.
+
+<h4>Sprint 3</h4>
+The third sprint includes:
+<ul>
+<li>Addition of the ParkServiceGUI</li>
+<li>A first communication with the robot: the robot starts to execute the paths to reach the first slot.</li>
+<li>Addition of the map to track robot location</li>
+</ul>
+This sprint will start on 15 July and will be completed within approximately 5 working days.
+
+<h4>Sprint 4 (Final)</h4>
+The final sprint will include the complete project. All functions will be made available and the system will be released.<br><br>
+This sprint will be completed and delivered by 23 July.
+
+
+ 
+
+<h2>Deployment</h2> 
+First of all it is necessary to start the WEnv on localhost. To do this, you need to start the docker image available at the link above.<br>
+After that to start the application, it is necessary to launch the <ks>MainCtxParking.kt</ks> class contained in the package <k>it.unibo.ctxParking</k> and the source folder <k>"src"</k>.
+This class will take care of starting all the sensors, the parkmanagerservice and the two graphical interfaces.<br><br>
+The source code of the entire application and of the various sprints is available at this link: <a href="https://github.com/MattiaPranzini/ParkManagerService-ISS2021" >https://github.com/MattiaPranzini/ParkManagerService-ISS2021</a>
+ 
+<h2>Maintenance</h2> 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:100%;text-align:left;color:white">
+By Lucrezia Corsaro (lucrezia.corsaro@studio.unibo.it), Salvatore Lia (salvatore.lia@studio.unibo.it), Mattia Pranzini (mattia.pranzini@studio.unibo.it)   
+</div> 
+</body>
+</html>
