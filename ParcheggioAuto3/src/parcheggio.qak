@@ -1,3 +1,5 @@
+/* Modello eseguibile utile ai fini di analisi del problema. */
+
 System parcheggio
 
 Dispatch uscita : uscita(token)
