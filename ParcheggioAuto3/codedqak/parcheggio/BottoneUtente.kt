@@ -11,14 +11,14 @@ import it.unibo.kactor.QakContext
 class BottoneUtente(name: String) : ActorBasic(name), Observer {
 
     private var present = true;
-    private var int : InterfacciaUtente ?= null 
+    private var int : ParkServiceGUI ?= null 
 
     init {
        println("\t##BOTTONEUTENTE")
 		
     }
 	
-	fun setInterfaccia(interf : InterfacciaUtente, ctx : QakContext?){
+	fun setInterfaccia(interf : ParkServiceGUI, ctx : QakContext?){
 		context = ctx
 		println(context)
 		int = interf
@@ -32,7 +32,7 @@ class BottoneUtente(name: String) : ActorBasic(name), Observer {
     override fun update(o: Observable?, arg: Any?) {
         runBlocking {
 			if(arg!!.toString().startsWith("CAR ENTER")){
-				println("CAR ENTER")
+				request("carenter", "carenter(0)", "parkmanagerservice")
 			}
 			if(arg.toString().startsWith("RITIRO AUTO")){
 				println("RITIRO AUTO")

@@ -16,12 +16,12 @@ class Managerservice ( name: String, scope: CoroutineScope  ) : ActorBasicFsm( n
 	@kotlinx.coroutines.ObsoleteCoroutinesApi
 	@kotlinx.coroutines.ExperimentalCoroutinesApi			
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
-		 var interfaccia :parcheggio.Interfaccia ?= null   
+		 var interfaccia :parcheggio.ParkServiceStatusGUI ?= null   
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
 						 
-								 interfaccia = parcheggio.Interfaccia(context)  
+								 interfaccia = parcheggio.ParkServiceStatusGUI(context)  
 					}
 					 transition( edgeName="goto",targetState="s1", cond=doswitch() )
 				}	 

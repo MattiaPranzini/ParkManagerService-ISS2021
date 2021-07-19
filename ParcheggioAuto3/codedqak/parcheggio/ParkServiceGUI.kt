@@ -12,7 +12,7 @@ import it.unibo.kactor.QakContext
 import javax.swing.event.DocumentListener
 import java.awt.event.KeyAdapter
 
-class InterfacciaUtente(ctx : QakContext?, title: String = "Button", x: Int = 60, y: Int = 60) : Observable(), ActionListener {
+class ParkServiceGUI(ctx : QakContext?, title: String = "Button", x: Int = 60, y: Int = 60) : Observable(), ActionListener {
 
     private val frame = JFrame(title)
     private val carEnter = JButton("CAR ENTER")

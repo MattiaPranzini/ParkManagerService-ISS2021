@@ -198,7 +198,12 @@ div.imagedesc{
 
 <div class="body"> 
 <h2>Introduction</h2>
- 
+ <div class="remark">
+Our motto:<br>   <k>there is no code without a project, no project
+without problem analysis and no problem without requirements</k>.
+ </div>
+In this document the first steps of the development of the "ParkManagerService" project will be reported. Fundamental aspects of the software engineer work will also be analyzed.<br>
+This document represents the final task of the Software Systems Engineering M course.
  
 <h2>Requirements</h2>
 <h3>Automated Car-Parking</h3> 
@@ -578,11 +583,19 @@ To prevent a large car from occupying more than one parking space, it is assumed
 <li><h4>Stop of the robot during operations</h4>
 In the event that the robot is stopped by the operator during a movement operation, the robot must stop in the position in which it is.
 When conditions allow, the robot's operations will have to resume where they left off.
-It is assumed that the customer waits for the robot to resume execution, ending the process.
+It is assumed that the customer waits for the robot to resume execution, ending the process.<br><br>
+Another issue that needs attention is the concurrency of operations. Especially if the robot is stopped by the manager before it has completed a parking or car collection operation, many requests could be queued. When resuming, the robot must first complete the operation that was interrupted and then manage the other requests.
+To do this, one option is to treat park and pickup operations as atomic operations. <br><tt>Pros:</tt> the robot does not need to "remember" where it was left in the operation.<br>
+<k>Cons:</k> since the robot cannot be stopped during the operation, if the temperature is too high the robot could be damaged.<br><br>
+Another solution is to save the exact point where the robot was stopped and the operation that was in progress. <br><tt>Pros: </tt>the execution can be resumed at the point where the robot was stopped; the robot does not perform too many operations with high temperature.<br>
+<k>Cons:</k> increased implementation difficulty.
 </li>
 
 <li><h4>Temperature > TMAX</h4>
-Considering the automated management of the fan, it is possible that the ParkingManager, for a distraction, forgets to turn off the robot when the temperature is above the TMAX threshold. To avoid damage to the robot, it is advisable to insert an alarm that draws the manager's attention (hopefully visual and audible).
+Considering the automated management of the fan, it is possible that the ParkingManager, for a distraction, forgets to turn off the robot when the temperature is above the TMAX threshold. To avoid damage to the robot, it is advisable to insert an alarm that draws the manager's attention (hopefully visual and audible).<br><br>
+Automated fan management was chosen as the following pros and cons were considered:<br>
+<tt>Pros:</tt> the manager cannot forget to turn on the fan when the temperature is high; the robot will not be damaged by human errors.<br>
+<k>Cons:</k> the manager cannot decide to keep the fan on even when the temperature is below the TMAX threshold. This results in a higher stop frequency of the robot when the temperature drops slightly below the threshold and shortly after exceeds the threshold again.
 </li>
 
 <li><h4>User into the car</h4>
@@ -761,8 +774,9 @@ In the figure shown above we specify that:
 
 <h4>Executable model - Sprint 3</h4>
 The third executable model is available in the <a href="https://raw.githubusercontent.com/MattiaPranzini/ParkManagerService-ISS2021/main/ParcheggioAuto3/src/parcheggio.qak" target="web">parcheggio.qak</a> file.<br>
-This executable model is compliant with the sprint 3 specifications indicated in the paragraphs above.
-
+This executable model is compliant with the sprint 3 specifications indicated in the paragraphs above.<br>
+In this model, starting the class MainCtxParking.kt will start the two interfaces of the client and the manager. By pressing the car enter button it will be possible to make the robot move to the indoor position and immediately afterwards it will reach the position of the slot located in the cell (2, 1).
+Only one client is simulated.
 
 <h2>Test plans</h2> 
 

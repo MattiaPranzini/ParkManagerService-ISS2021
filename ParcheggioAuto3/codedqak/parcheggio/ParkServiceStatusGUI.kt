@@ -10,7 +10,7 @@ import java.awt.Color
 import it.unibo.kactor.ActorBasic
 import it.unibo.kactor.QakContext
 
-class Interfaccia(ctx : QakContext?, title: String = "Button", x: Int = 30, y: Int = 30) : Observable(), ActionListener {
+class ParkServiceStatusGUI(ctx : QakContext?, title: String = "Button", x: Int = 30, y: Int = 30) : Observable(), ActionListener {
 
     private val frame = JFrame(title)
     private val stoprobot = JButton("Stop robot")

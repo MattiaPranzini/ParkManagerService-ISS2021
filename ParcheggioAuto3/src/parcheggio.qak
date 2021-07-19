@@ -1,9 +1,6 @@
-/* Modello eseguibile utile ai fini di analisi del problema. */
-
 System parcheggio
 
 Dispatch uscita : uscita(token)
-
 Dispatch park : park(V)
 Dispatch ingresso : ingresso(V)
 Dispatch outdoor : outdoor(V)
@@ -18,13 +15,11 @@ Dispatch uscitalibera1 : uscitalibera1(V)
 Dispatch cambiostato : cambiostato(V)
 Dispatch parcheggioOccupato : parcheggioOccupato(V)
 Dispatch parcheggioLibero : parcheggioLibero(V)
-
+Dispatch slotsnum : slotsnum(SN)
 
 Request acceptout : acceptout(V)
 Reply response : response(V)
 
-//Request acceptin : acceptin(V)
-Dispatch slotsnum : slotsnum(SN)
 
 Request carenter : carenter(V)
 Reply receipt : receipt(TOKENID)
@@ -46,7 +41,7 @@ Event start : start(V)
 Context ctxParcheggio ip [host="localhost" port=8082]
 
 CodedQActor outsonar context ctxParcheggio className "outSonar"
-//CodedQActor startstop context ctxParcheggio className "parcheggio.StartStop"
+
 
 QActor weightsensor context ctxParcheggio { 
 	State s0 initial{
@@ -107,128 +102,13 @@ QActor fan context ctxParcheggio{
 	}
 	Transition t0 whenEvent tempalarmoff -> s0
 }
-/*
-QActor prova2 context ctxParcheggio{
-	[#
-		val mapname     = "mappaParcheggio"  		 
-		var Myself      = myself   
-		var CurrentPlannedMove = "" 
-		var RobotType     = "" 
-	#] 
-	State s0 initial {	 
-		qrun unibo.robot.robotSupport.create(myself,"basicrobotConfig.json")	
- 		[# RobotType = unibo.robot.robotSupport.robotKind #]
- 		updateResource [# "basicrobot(start)" #]
- 		
-     	run itunibo.planner.plannerUtil.initAI()
-		println("&&&  trolley loads the parking map from the given file ...") 
-		run itunibo.planner.plannerUtil.loadRoomMap("$mapname") 
-		//Set the parking area ...
-  		//run itunibo.planner.plannerUtil.updateMapObstacleOnCurrentDirection()
-		run itunibo.planner.plannerUtil.showMap( )   
-     	run itunibo.planner.plannerUtil.showCurrentRobotState()
-     	
-     	run pathexecutil.register( Myself ) 
-   	}
-   	Goto moveToIndoor 
-   	
-   	State moveToIndoor{  	
-  		 run itunibo.planner.plannerUtil.planForGoal("5","0")
-  		 [#  CurrentPlannedMove = itunibo.planner.plannerUtil.getNextPlannedMove() 
 
-  		 	while(CurrentPlannedMove.length>0){
-  		 		println("MOSSa $CurrentPlannedMove")
-  		 		itunibo.planner.plannerUtil.updateMap("$CurrentPlannedMove")
-  		 #]
-  		 
-  		 		if [# CurrentPlannedMove.equals("w") || CurrentPlannedMove.equals("s") #]{
-  		 			run unibo.robot.robotSupport.move("$CurrentPlannedMove")
-  		 			delay 400
-  		 			run unibo.robot.robotSupport.move("h")
-  		 		} else {
-  		 			run unibo.robot.robotSupport.move("$CurrentPlannedMove")
-  		 		}
-  		 [#		
-  		 		CurrentPlannedMove = itunibo.planner.plannerUtil.getNextPlannedMove()
-  		 	}
-  		 	
-  		 	
-  		 #]
-
-  		 run itunibo.planner.plannerUtil.planForGoal("1","1")
-  		 [#  CurrentPlannedMove = itunibo.planner.plannerUtil.getNextPlannedMove() 
-
-  		 	while(CurrentPlannedMove.length>0){
-  		 		println("MOSSa $CurrentPlannedMove")
-  		 		itunibo.planner.plannerUtil.updateMap("$CurrentPlannedMove")
-  		 #]
-  		 		if [# CurrentPlannedMove.equals("w") || CurrentPlannedMove.equals("s") #]{
-  		 			run unibo.robot.robotSupport.move("$CurrentPlannedMove")
-  		 			delay 400
-  		 			run unibo.robot.robotSupport.move("h")
-  		 		} else {
-  		 			run unibo.robot.robotSupport.move("$CurrentPlannedMove")
-  		 		}
-
-  		 [#		
-  		 		CurrentPlannedMove = itunibo.planner.plannerUtil.getNextPlannedMove()
-  		 	}
-  		 	
-  		 	
-  		 #]
-  		 
-   	}  
-}
-* 
-*/
-/*
-QActor prova context ctxParcheggio{
-	[# //var connQakSupport = connQak.connQakBase.create(connQak.connprotocol) 
-		//connQakSupport.createConnection()
-		  var StepTime      = 1000L
-  			var StartTime     = 1000L 
-		#]
-	State s0 initial{
-		[#
-			//val msg = MsgUtil.buildDispatch("console", "cmd", "cmd(l)", connQak.qakdestination )
-			//connQakSupport.forward( msg )
-			var RobotType     = "" 
-			
-		#]
-		println("basicrobot | START")	
- 		qrun unibo.robot.robotSupport.create(myself,"basicrobotConfig.json")	
- 		[# RobotType = unibo.robot.robotSupport.robotKind #]
- 		updateResource [# "basicrobot(start)" #]
- 		delay 1000
-   		run unibo.robot.robotSupport.move( "l" )
-		run unibo.robot.robotSupport.move( "r" )
- 		discardMsg Off  //WE want receive any msg
- 		//run unibo.robot.robotSupport.move( "w" )
-	}Goto doStep
-	
-	 	State doStep{  
-        memoCurrentTime StartTime  
-        println("basicrobot | doStep StepTime =$StepTime ")        
-        run unibo.robot.robotSupport.move( "w" )  //moves a real robot forever
-	}  
-	Transition t0 
-		whenTimeVar StepTime  -> stepDone 
-  	 
-	State stepDone{   
- 		run unibo.robot.robotSupport.move( "h" )  //stop the real robot already done
-		println("basicrobot | stepDone")
-		updateResource [# "stepDone($StepTime)" #]
-   		//println("basicrobot | stepDone reply done")
-  	}
-}
-* 
-*/
 
 QActor managerservice context ctxParcheggio{
-	[# var interfaccia :parcheggio.Interfaccia ?= null  #]
+	[# var interfaccia :parcheggio.ParkServiceStatusGUI ?= null  #]
 	State s0 initial{
 		[# 
-		 interfaccia = parcheggio.Interfaccia(context) #]
+		 interfaccia = parcheggio.ParkServiceStatusGUI(context) #]
 	}Goto s1
 	State s1{
 		onMsg(temperatura : temperatura(TEMPERATURA)){
@@ -561,114 +441,23 @@ QActor parkmanagerservice context ctxParcheggio {
 					  whenRequest carenter -> movetoin				  
 }
 
-/*
-QActor door context ctxParcheggio{
-	[#
-		var robotLibero = true
-		var outdoorLibera = true
-		var postiLiberi = 6
-	#]
-	
-	State s0 initial{
-		println("Stato 0 initial")
-	}
-	Transition t0 whenMsg uscita -> uscita
-				whenMsg ingresso -> ingresso
-	
-	
-	State uscita{
-		println("Uscita")
-		if[# robotLibero==true #]{
-			onMsg(uscita : uscita(token)){
-				[# var token = payloadArg(0) #]
-			}
-			[# robotLibero = false #]
-			updateResource[#"$robotLibero"#]
-			println("Robot occupato, carica auto e la sposta in uscita.")
-			delay 500
-			forward door -m outdoor : outdoor(1)
-		} else{
-			println("Uscita, ROCCUPATO")
-			forward door -m uscita : uscita(1)
-		}
-	}
-	Transition t0 whenMsg outdoor -> outdoor
-	
-	
-	State outdoor{
-		[#
-			robotLibero = true
-			outdoorLibera = false
-			postiLiberi = postiLiberi+1
-		#]
-		updateResource[#"$postiLiberi"#]
-		updateResource[#"$robotLibero"#]
-		updateResource[#"$outdoorLibera"#]
-		println("Robot libero, uscita occupata")
-		delay 500
-	}
-	Goto liberaUscita
-	
-	State liberaUscita{
-		[#
-			var outdoorLibera = true
-		#]
-		println("Robot libero, uscita libera.")
-		delay 1000
-	}
-	Transition t0 whenMsg uscita -> uscita
-				whenMsg ingresso -> ingresso
-	State ingresso {
-		println("Ingresso")
-		[#
-			postiLiberi = postiLiberi-1
-		#]
-		updateResource[#"$postiLiberi"#]
-		if[# robotLibero==true #]{
-			println("Ingresso, RL")
-			[#
-				robotLibero=false
-			#]
-			updateResource[#"$robotLibero"#]
-			delay 500
-			forward door -m park : park(1)
-		} else{
-			println("Ingresso, ROCCUPATO")
-			forward door -m ingresso : ingresso(1)
-		}
-	}
-	Transition t0 whenMsg ingresso -> ingresso
-				whenMsg park -> park
-	
-	State park{
-		[#
-			robotLibero=true
-		#]
-		updateResource[#"$robotLibero"#]
-		println("PARCHEGGIATO!")
-		delay 1000
-	} 
-	Transition t0 whenMsg uscita -> uscita
-				whenMsg ingresso -> ingresso
-}
-
-*/
 
 QActor cliente context ctxParcheggio{
 	[# var TOKENID="" 
-		var interfaccia :parcheggio.InterfacciaUtente ?= null  
+		var interfaccia :parcheggio.ParkServiceGUI ?= null  
 	#]
 	State s0 initial{
 		[# 
-		 interfaccia = parcheggio.InterfacciaUtente(context) #]
+		 interfaccia = parcheggio.ParkServiceGUI(context) #]
 	}Transition t0 whenMsg slotsnum -> s1
+		 		whenReply receipt -> s2
+				whenReply response -> s3
+	
 	
 	State s1 {
 		onMsg( slotsnum : slotsnum(S)){
-			[# var S = payloadArg(0).toInt() #]
-			if [# S>0 #]{
-				request parkmanagerservice -m carenter : carenter
-			} 
+			[# var S = payloadArg(0) #]
+			[# interfaccia!!.postiLiberi(S) #]
 		}
 	}
 	Transition t0 whenReply receipt -> s2
@@ -701,11 +490,7 @@ QActor cliente context ctxParcheggio{
 		println("Invio evento autospostata")
 	}
 	
-	/*State s0 initial {
-		forward door -m ingresso : ingresso(1) 
-		forward door -m uscita : uscita(1) 
-		forward door -m ingresso : ingresso(1)
-	}*/
+
 }
 
 

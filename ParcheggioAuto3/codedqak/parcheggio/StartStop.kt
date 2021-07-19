@@ -11,14 +11,14 @@ import it.unibo.kactor.QakContext
 class StartStop(name: String) : ActorBasic(name), Observer {
 
     private var present = true;
-    private var int : Interfaccia ?= null 
+    private var int : ParkServiceStatusGUI ?= null 
 
     init {
        println("\t##STARTSTOP")
 		
     }
 	
-	fun setInterfaccia(interf : Interfaccia, ctx : QakContext?){
+	fun setInterfaccia(interf : ParkServiceStatusGUI, ctx : QakContext?){
 		context = ctx
 		println(context)
 		int = interf

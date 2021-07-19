@@ -17,26 +17,26 @@ class Cliente ( name: String, scope: CoroutineScope  ) : ActorBasicFsm( name, sc
 	@kotlinx.coroutines.ExperimentalCoroutinesApi			
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
 		 var TOKENID="" 
-				var interfaccia :parcheggio.InterfacciaUtente ?= null  
+				var interfaccia :parcheggio.ParkServiceGUI ?= null  
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
 						 
-								 interfaccia = parcheggio.InterfacciaUtente(context)  
+								 interfaccia = parcheggio.ParkServiceGUI(context)  
 					}
 					 transition(edgeName="t062",targetState="s1",cond=whenDispatch("slotsnum"))
+					transition(edgeName="t063",targetState="s2",cond=whenReply("receipt"))
+					transition(edgeName="t064",targetState="s3",cond=whenReply("response"))
 				}	 
 				state("s1") { //this:State
 					action { //it:State
 						if( checkMsgContent( Term.createTerm("slotsnum(SN)"), Term.createTerm("slotsnum(S)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
-								 var S = payloadArg(0).toInt()  
-								if(  S>0  
-								 ){request("carenter", "carenter" ,"parkmanagerservice" )  
-								}
+								 var S = payloadArg(0)  
+								 interfaccia!!.postiLiberi(S)  
 						}
 					}
-					 transition(edgeName="t063",targetState="s2",cond=whenReply("receipt"))
+					 transition(edgeName="t065",targetState="s2",cond=whenReply("receipt"))
 				}	 
 				state("s2") { //this:State
 					action { //it:State
@@ -48,7 +48,7 @@ class Cliente ( name: String, scope: CoroutineScope  ) : ActorBasicFsm( name, sc
 						delay(5000) 
 						request("acceptout", "acceptout($TOKENID)" ,"parkmanagerservice" )  
 					}
-					 transition(edgeName="t064",targetState="s3",cond=whenReply("response"))
+					 transition(edgeName="t066",targetState="s3",cond=whenReply("response"))
 				}	 
 				state("s3") { //this:State
 					action { //it:State
@@ -62,8 +62,8 @@ class Cliente ( name: String, scope: CoroutineScope  ) : ActorBasicFsm( name, sc
 								}
 						}
 					}
-					 transition(edgeName="t065",targetState="s3",cond=whenReply("response"))
-					transition(edgeName="t066",targetState="s4",cond=whenEvent("arrivoauto"))
+					 transition(edgeName="t067",targetState="s3",cond=whenReply("response"))
+					transition(edgeName="t068",targetState="s4",cond=whenEvent("arrivoauto"))
 				}	 
 				state("s4") { //this:State
 					action { //it:State
