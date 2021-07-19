@@ -1,0 +1,26 @@
+HOME
+(0, 0)
+INDOOR
+{"endmove":"true","move":"turnLeft"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+(5, 0)
+SLOT 1 1
+{"endmove":"true","move":"turnLeft"}
+{"endmove":"true","move":"turnLeft"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"turnLeft"}
+{"endmove":"true","move":"halt"}
+(1, 1)
+HOME
+{"endmove":"true","move":"turnRight"}
+{"endmove":"true","move":"halt"}
+{"endmove":"true","move":"turnRight"}
+{"endmove":"true","move":"halt"}
+(0, 0)
