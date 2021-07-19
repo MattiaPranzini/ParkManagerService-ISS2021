@@ -84,7 +84,7 @@ class ParkingTest {
     
 	@Test
 	fun parking(){
- 		println("+++++++++ testrotationmoves ")
+ 		println("+++++++++ parkingtest ")
 		//Send a command and look at the result
 		var result  = ""
 		runBlocking{
@@ -95,7 +95,7 @@ class ParkingTest {
 			MsgUtil.sendMsg(accptin, myactor!!)
  			
 			result = channelForObserver.receive()
-			println("+++++++++ testrotationmoves l RESULT=$result")
+			println("+++++++++ parkingtest l RESULT=$result")
 			assertEquals( result, "posti(6)")
 			delay(200)			//
 			
@@ -106,21 +106,21 @@ class ParkingTest {
 			
 			testingObserver!!.addObserver( channelForObserver,"posti(5)")
 			result = channelForObserver.receive()
-			println("+++++++++ testrotationmoves l RESULT=$result")
+			println("+++++++++ parkingtest l RESULT=$result")
 			assertEquals( result, "posti(5)")
 			delay(200)	 
 			result = channelForObserver.receive()
-			println("+++++++++ testrotationmoves r RESULT=$result")
+			println("+++++++++ parkingtest r RESULT=$result")
 			assertEquals( result, "ricevuta(H000)")
 			
 			testingObserver!!.addObserver( channelForObserver,"pos((1, 1))")
 			result = channelForObserver.receive()
-			println("+++++++++ testrotationmoves r RESULT=$result")
+			println("+++++++++ parkingtest r RESULT=$result")
 			assertEquals( result, "pos((1, 1))")
 			delay(400)
 			testingObserver!!.addObserver( channelForObserver,"pos((0, 0))")
 			result = channelForObserver.receive()
-			println("+++++++++ testrotationmoves r RESULT=$result")
+			println("+++++++++ parkingtest r RESULT=$result")
 			assertEquals( result, "pos((0, 0))")
 		}	
 	} 

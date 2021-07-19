@@ -20,7 +20,7 @@ import it.unibo.kactor.ApplMessage
 import org.junit.After
  
  
-class PickupTest {
+class PickupTest{
 		
 	companion object{
 		var testingObserver   : CoapObserverForTesting ? = null
@@ -84,7 +84,7 @@ class PickupTest {
     
 	@Test 
 	fun pickup()  {
-		println("+++++++++ goAheadUntilObstacle ")
+		println("+++++++++ pickupTest ")
 		//sysUtil.waitUser("PLEASE, put the robot at HOME", 1000 )
 		
 		
@@ -97,7 +97,7 @@ class PickupTest {
 			delay(400)
 			testingObserver!!.addObserver( channelForObservers,"pos((0, 0))")
 			var result = channelForObservers.receive()
-			println("+++++++++ testrotationmoves r RESULT=$result")
+			println("+++++++++ pickupTest r RESULT=$result")
 			assertEquals( result, "pos((0, 0))")
 			
 			
@@ -107,29 +107,29 @@ class PickupTest {
 			val cmd = MsgUtil.buildRequest("parcheggio", "acceptout", "acceptout(H000)", "parcheggio")
 			MsgUtil.sendMsg(cmd, myactor!!)
 			result = channelForObservers.receive()
-			println("+++++++++  goAheadUntilObstacle RESULT=$result ")	
+			println("+++++++++  pickupTest RESULT=$result ")	
 			assertEquals( result, "response(true)")
 			
 			//delay(200)
 			testingObserver!!.addObserver( channelForObservers,"posti(6)" )
 			result = channelForObservers.receive()
-			println("+++++++++  goAheadUntilObstacle RESULT=$result ")	
+			println("+++++++++  pickupTest RESULT=$result ")	
 			assertEquals( result, "posti(6)")
 			
 			testingObserver!!.addObserver( channelForObservers,"pos((1, 1))" )
 			result = channelForObservers.receive()
-			println("+++++++++  goAheadUntilObstacle RESULT=$result ")	
+			println("+++++++++  pickupTest RESULT=$result ")	
 			assertEquals( result, "pos((1, 1))")	
 			
 			testingObserver!!.addObserver( channelForObservers,"pos((5, 4))" )
 			result = channelForObservers.receive()
-			println("+++++++++  goAheadUntilObstacle RESULT=$result ")	
+			println("+++++++++  pickupTest RESULT=$result ")	
 			assertEquals( result, "pos((5, 4))")	
 
 			delay(400)
 			testingObserver!!.addObserver( channelForObservers,"pos((0, 0))")
 			result = channelForObservers.receive()
-			println("+++++++++ testrotationmoves r RESULT=$result")
+			println("+++++++++ pickupTest r RESULT=$result")
 			assertEquals( result, "pos((0, 0))")
 		}		  
 	}
