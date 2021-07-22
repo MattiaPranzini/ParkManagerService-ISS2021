@@ -497,7 +497,7 @@ The user story provided by the client specifies that the customer will be the on
 The ParkManagerService must also provide a receipt to the customer containing a unique TOKEN. It will be the customer's responsibility to keep this TOKEN, as it will be used to collect the car. The TOKEN must be constructed in such a way that it can be traced back to the slot id.
 </li>
 <li><ks>ParkManagerService <-> Trolley: </ks>The ParkManagerService must also communicate with the Trolley to issue movement commands. The use of the websocket could prove to be more flexible (as it allows to receive information emitted by WEnv in a 'spontaneous' way) and more efficient (as it reduces the protocol hierarchy).<br>
-The trolley can be managed with the commands specified at <a href="https://htmlpreview.github.io/?https://github.com/anatali/issLab2021/blob/main/it.unibo.virtualRobot2020/userDocs/VirtualRobot2021.html" target="web" >this link.</a>
+
 </li>
 <li><ks>ParkManagerService <-> ParkServiceStatusGUI: </ks>The ParkServiceStatusGUI must display the current system status to the ParkingManager. To do this, it communicates with the ParkManagerService and retrieves information on the parking status such as free and occupied slots, fan on or off, displays outdoor and high temperature alarms, robot status (idle, working, stop).
 The ParkServiceStatusGUI is also equipped with a button that allows the ParkingManager to stop the robot (STOP state) and resume the execution of the robot.
@@ -947,7 +947,8 @@ After that to start the parkmanagerservice, it is necessary to launch the <ks>Ma
 The source code of the entire application and of the various sprints is available at this link: <a href="https://github.com/MattiaPranzini/ParkManagerService-ISS2021" >https://github.com/MattiaPranzini/ParkManagerService-ISS2021</a>
  
 <h2>Maintenance</h2> 
- 
+ Periodically the system may need updates that allow it to remain at the forefront. For example, due to technological evolution, in the future, updates may be necessary to improve the user experience and security of the entire system.
+
 <!-- USEFUL
 <table style="width:100%" border="1">
 <tr>
